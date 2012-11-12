@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <script src="http://code.jquery.com/jquery-latest.pack.js"></script>
+        <script src="{{ asset('/bootstrap/js/bootstrap.js') }}"></script>
+        <link href="{{ asset('/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body style="margin-top: 40px;">
+                
+        <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand" href="#">CRM</a>
+              <div class="nav-collapse collapse">
+                
+                <ul class="nav">
+                  <li class="active"><a href="#">Home</a></li>
+                  <li><a href="#about">About</a></li>
+                  <li><a href="#contact">Contact</a></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">Action</a></li>
+                      <li class="divider"></li>
+                      <li class="nav-header">Nav header</li>
+                      <li><a href="#">Separated link</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                
+                <ul class="nav pull-right">
+                    <li>
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <a href="{{ path('fos_user_security_logout') }}">
+                                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                            </a>
+                        {% else %}
+                            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        {% endif %}
+                    </li>
+                </ul>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="container">
+            
+            {% for key, message in app.session.getFlashes() %}
+            <div class="{{ key }}">
+                {{ message|trans({}, 'AppUserBundle') }}
+            </div>
+            {% endfor %}
+    
+            
+            <div class="row">
+                {% if block('side_content') %}
+                    <div class="span8">
+                        {% if block('title') %}
+                            <h2>{{ block('title') }}</h2>
+                        {% endif %}
+                        <p>{{ block('main_content') }}</p>
+                    </div>
+                    <div class="span4">
+                        <p>{{ block('side_content') }}</p>
+                    </div>
+                {% else %}
+                    <div class="span12">
+                        {% if block('title') %}
+                            <h2>{{ block('title') }}</h2>
+                        {% endif %}
+                        <p>{{ block('main_content') }}</p>
+                    </div>
+                {% endif %}
+            </div>
+    
+            <footer>
+            <p>&copy; Company 2012</p>
+            </footer>
+        </div>
+    </body>
+</html>
