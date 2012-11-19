@@ -46,7 +46,7 @@
         <div class="main-container">
             <div class="main wrapper clearfix">
                 
-                {{ block('main_content') }}
+                {{ block('body') }}
                 
                 {% if block('side_content') %}
                     <aside>
@@ -66,6 +66,7 @@
         <script src="http://code.jquery.com/jquery-latest.pack.js"></script>
         <script src="{{ asset('/html5/js/vendor/modernizr-2.6.1-respond-1.1.0.min.js') }}"></script>
         <script src="{{ asset('/html5/js/main.js') }}"></script>
+        {% block javascripts %}{% endblock %}
 
     </body>
 </html>
